@@ -8,9 +8,9 @@ import time
 import json
 
 
-token = os.getenv("BOT_TOKEN")
-devman_token = os.getenv("DEVMAN_TOKEN")
-chat_id = os.getenv('CHAT_ID')
+token = os.environ("TELEGRAM_TOKEN")
+devman_token = os.environ("DEVMAN_TOKEN")
+chat_id = os.environ('CHAT_ID')
 bot = telegram.Bot(token=token)
 longpool_api = 'https://dvmn.org/api/long_polling/'
 headers = {"Authorization": devman_token}
