@@ -18,6 +18,17 @@ headers = {"Authorization": devman_token}
 class JsonDataError(ValueError):
   pass
 
+class TelegramLogsHandler(logging.Handler):
+
+  def __init__(self, tg_bot, chat_id):
+    super().__init__()
+    self.chat_id = chat_id
+    self.tg_bot = tg_bot
+  
+  def emit(self, record):
+    log_entry = self.format(record)
+    self.tg_bot.send_message(chat_id=self.chat_id, text=log_entry)
+
 
 def get_data(url, headers, timestamp):
   params={'timestamp': timestamp}
@@ -33,7 +44,6 @@ def get_data(url, headers, timestamp):
 
 
 def main():
-  logging.basicConfig(level=logging.INFO)
   parser = argparse.ArgumentParser()
   parser.add_argument('--chat_id', help='Ваш ID в телеграмм', default=chat_id)
   args = parser.parse_args()
@@ -52,5 +62,13 @@ def main():
       timestamp = json_data['timestamp_to_request']
 
 if __name__ == '__main__':
-  print('Start')
-  main()
+  logger = logging.getLogger('Logger')
+  logger.setLevel(logging.WARNING)
+  logger.addHandler(TelegramLogsHandler(bot, chat_id))
+  logger.error('Бот запущен')
+  while True:
+    try:
+      main()
+    except Exception:
+      logger.exception('Бот упал с ошибкой:')
+      sleep(30)
