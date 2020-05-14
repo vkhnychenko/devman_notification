@@ -9,7 +9,7 @@ import json
 from time import sleep
 
 
-tg_token = os.getenv("BOT_TOKEN")
+tg_token = os.getenv("TELEGRAM_TOKEN")
 devman_token = os.getenv("DEVMAN_TOKEN")
 chat_id = os.getenv('TG_CHAT_ID')
 bot = telegram.Bot(token=tg_token)
