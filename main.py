@@ -38,10 +38,9 @@ def get_data(url, headers, timestamp):
 	response = requests.get(url, headers=headers, params=params)
 	response.raise_for_status()
 	json_data = response.json()
-
-  	if 'error' in json_data:
-    	raise JsonDataError('Данные поступили с ошибкой внутри')
-  	return json_data
+	if 'error' in json_data:
+		raise JsonDataError('Данные поступили с ошибкой внутри')
+	return json_data
 
 
 def main():
@@ -76,6 +75,6 @@ def main():
 			logger.exception('Бот упал с ошибкой:')
 			sleep(30)
 
+
 if __name__ == '__main__':
 	main()
-	
