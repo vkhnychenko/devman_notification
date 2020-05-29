@@ -35,9 +35,9 @@ class TelegramLogsHandler(logging.Handler):
 
 def get_data(url, headers, timestamp):
 	params = {'timestamp': timestamp}
-  	response = requests.get(url, headers=headers, params=params)
-  	response.raise_for_status()
-  	json_data = response.json()
+	response = requests.get(url, headers=headers, params=params)
+	response.raise_for_status()
+	json_data = response.json()
 
   	if 'error' in json_data:
     	raise JsonDataError('Данные поступили с ошибкой внутри')
